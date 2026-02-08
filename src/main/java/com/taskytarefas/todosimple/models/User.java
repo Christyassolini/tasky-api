@@ -1,49 +1,57 @@
 package com.taskytarefas.todosimple.models;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.apache.logging.log4j.spi.ObjectThreadContextMap;
-
-import java.util.Objects;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 @Entity
 @Table(name = "user")
 public class User {
     public interface CreateUser {
     }
+
     public interface UpdateUser {
     }
 
     public static final String TABLE_NAME = "user";
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private Long id;
 
     @Column(name = "nome", length = 100, nullable = false)
-    @NotNull(groups = {CreateUser.class, UpdateUser.class})
-    @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
+    @NotNull(groups = { CreateUser.class, UpdateUser.class })
+    @NotEmpty(groups = { CreateUser.class, UpdateUser.class })
     private String nome;
 
     @Column(name = "email", length = 255, nullable = false, unique = true)
-    @NotNull(groups = {CreateUser.class, UpdateUser.class})
-    @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
+    @NotNull(groups = { CreateUser.class, UpdateUser.class })
+    @NotEmpty(groups = { CreateUser.class, UpdateUser.class })
     private String email;
 
+    @JsonProperty(access = Access.WRITE_ONLY)
     @Column(name = "senha", length = 60, nullable = false)
-    @NotNull(groups = {CreateUser.class, UpdateUser.class})
-    @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
-    @Size(groups = {CreateUser.class, UpdateUser.class}, min = 6, max = 60)
+    @NotNull(groups = { CreateUser.class, UpdateUser.class })
+    @NotEmpty(groups = { CreateUser.class, UpdateUser.class })
+    @Size(groups = { CreateUser.class, UpdateUser.class }, min = 6, max = 60)
     private String senha;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<Task>();
 
     public User() {
     }
@@ -87,24 +95,33 @@ public class User {
         this.senha = senha;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-    if (this == obj)
-        return true;
 
-    if (obj == null)
-        return false;
-
-    if (!(obj instanceof User))
-        return false;
-
-    User other = (User) obj;
-
-    if (this.id != null && other.id != null) {
-        return Objects.equals(this.id, other.id);
+    public List<Task> getTasks() {
+        return this.tasks;
     }
 
-    return Objects.equals(this.email, other.email);
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof User))
+            return false;
+
+        User other = (User) obj;
+
+        if (this.id != null && other.id != null) {
+            return Objects.equals(this.id, other.id);
+        }
+
+        return Objects.equals(this.email, other.email);
     }
 
     @Override
@@ -115,4 +132,3 @@ public class User {
         return result;
     }
 }
-
