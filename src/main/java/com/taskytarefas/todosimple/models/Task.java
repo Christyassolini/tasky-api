@@ -24,8 +24,14 @@ public class Task {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false) //Indica qual será a coluna de ligação (chave estrangeira) no banco.
     private User user;
+
+    @Column(name = "titulo", length = 25, nullable = false)
+    @NotNull
+    @NotEmpty
+    @Size(min = 1, max = 25)
+    private String titulo;
 
     @Column(name = "description", length = 500, nullable = false)
     @NotNull
@@ -57,6 +63,14 @@ public class Task {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getDescription() {

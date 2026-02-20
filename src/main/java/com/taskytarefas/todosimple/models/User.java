@@ -50,10 +50,10 @@ public class User {
     @Size(groups = { CreateUser.class, UpdateUser.class }, min = 6, max = 60)
     private String senha;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user") //O mappedBy = "user" indica que o lado dono da relação está na entidade Task, no atributo chamado user.
     private List<Task> tasks = new ArrayList<Task>();
 
-    public User() {
+    public User() { // Toda entidade anotada com: @Entity PRECISA ter um construtor sem argumentos.
     }
 
     public User(Long id, String nome, String email, String senha) {
@@ -105,7 +105,8 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) { // Define quando dois objetos User devem ser considerados iguais, comparando pelo id (ou email se o id for null).
+
         if (this == obj)
             return true;
 
