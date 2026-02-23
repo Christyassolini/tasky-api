@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.taskytarefas.todosimple.models.Task;
 import com.taskytarefas.todosimple.models.User;
 import com.taskytarefas.todosimple.repositories.TaskRepository;
-import com.taskytarefas.todosimple.repositories.UserRepository;
 
 @Service
 public class TaskService {

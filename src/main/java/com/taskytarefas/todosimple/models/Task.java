@@ -43,9 +43,10 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, User user, String description) {
+    public Task(Long id, User user,String titulo, String description) {
         this.id = id;
         this.user = user;
+        this.titulo = titulo;
         this.description = description;
     }
 
