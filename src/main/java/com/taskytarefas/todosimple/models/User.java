@@ -11,8 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,19 +35,17 @@ public class User {
     private Long id;
 
     @Column(name = "nome", length = 100, nullable = false)
-    @NotNull(groups = { CreateUser.class, UpdateUser.class })
-    @NotEmpty(groups = { CreateUser.class, UpdateUser.class })
+    @NotBlank(groups = {CreateUser.class, UpdateUser.class})
     private String nome;
 
+    @Email
     @Column(name = "email", length = 255, nullable = false, unique = true)
-    @NotNull(groups = { CreateUser.class, UpdateUser.class })
-    @NotEmpty(groups = { CreateUser.class, UpdateUser.class })
+    @NotBlank(groups = {CreateUser.class, UpdateUser.class})
     private String email;
 
     @JsonProperty(access = Access.WRITE_ONLY)
     @Column(name = "senha", length = 60, nullable = false)
-    @NotNull(groups = { CreateUser.class, UpdateUser.class })
-    @NotEmpty(groups = { CreateUser.class, UpdateUser.class })
+    @NotBlank(groups = {CreateUser.class, UpdateUser.class})
     @Size(groups = { CreateUser.class, UpdateUser.class }, min = 6, max = 60)
     private String senha;
 

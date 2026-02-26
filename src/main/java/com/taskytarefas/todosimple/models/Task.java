@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,14 +29,12 @@ public class Task {
     private User user;
 
     @Column(name = "titulo", length = 25, nullable = false)
-    @NotNull
-    @NotEmpty
+    @NotBlank
     @Size(min = 1, max = 25)
     private String titulo;
 
     @Column(name = "description", length = 500, nullable = false)
-    @NotNull
-    @NotEmpty
+    @NotBlank
     @Size(min = 1,max = 500)
     private String description;
 
