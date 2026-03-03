@@ -16,6 +16,7 @@ import com.taskytarefas.todosimple.models.User.CreateUser;
 import com.taskytarefas.todosimple.models.User.UpdateUser;
 import com.taskytarefas.todosimple.services.UserService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/user")
 @Validated
+@CrossOrigin(origins = "*")
 public class UserController {
     
     @Autowired

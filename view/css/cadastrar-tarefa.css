@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #4F46E5;
+  --primary-light: #6366F1;
+  --bg: #F9FAFB;
+  --text-main: #43464e;
+  --text-secondary: #6B7280;
+  --success: #22C55E;
+  --error: #EF4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    width: 100%;
+    height: 100vh;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+button {
+  font-weight: 500;
+}
+
+p, span, input {
+  font-weight: 400;
+}
+
+/* ==================== Header ==================== */
+
+.header {
+    display: flex;
+    background: linear-gradient(120deg, #6366F1,#4F46E5,#3b32ec);
+    height: 125px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 50px 0 20px;
+
+}
+
+.logo img {
+    height: 150px;
+    width: 140px;
+    border-radius: 10px;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.nav span {
+    color: white;
+    background-color: var(--primary-light);
+    border-radius: 10px;
+    padding: 10px 10px 10px 10px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.nav span:hover {
+    background-color: #898bff;
+}
+
+/* ==================== Cadastrar Tarefa ==================== */
+
+.container{
+    position: relative;
+    width: 100%;
+}
+
+.cadastro-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cadastro-container h1 {
+    font-size: 3rem;
+}
+
+.container-title {
+    width: 800px;
+}
+
+.titulo-cadastre {
+    display: grid;
+    grid-template-columns: 1fr 500px 1fr;
+    align-items: center;
+}
+
+.form{
+    width: 800px;
+}
+
+.form div {
+    margin-bottom: 20px;
+}
+
+.nome-titulo input {
+    width: 100%;
+    height: 30px;
+    padding: 0 10px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border: none;
+    outline: none;
+    transition: 0.3s;
+}
+
+.nome-titulo input:focus {
+    transform: scale(1.01);
+}
+
+.desc textarea {
+    width: 100%;
+    resize: none;
+    overflow-y: auto;
+    padding: 10px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border: none;
+    outline: none;
+    transition: 0.3s;
+}
+
+.contador {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.desc textarea:focus {
+    transform: scale(1.01);
+}
+
+.alteracoes {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.cancelar button {
+    background-color: var(--error);
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+}
+
+.cancelar button:hover {
+    background-color: #752020;
+    transform: scale(1.02);
+}
+
+.salvar button {
+    background-color: var(--success);
+    padding: 10px 30px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.salvar button:hover {
+    background-color: #16853f;
+    transform: scale(1.02);
+}
