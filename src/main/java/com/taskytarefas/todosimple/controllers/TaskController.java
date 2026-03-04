@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.taskytarefas.todosimple.models.Task;
-import com.taskytarefas.todosimple.models.User.CreateUser;
-import com.taskytarefas.todosimple.models.User.UpdateUser;
+import com.taskytarefas.todosimple.models.projection.TaskProjection;
 import com.taskytarefas.todosimple.services.TaskService;
-import com.taskytarefas.todosimple.services.UserService;
 
 @RestController
 @RequestMapping("/task")
@@ -34,9 +32,6 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id) {
         Task obj = this.taskService.findById(id);
@@ -44,16 +39,16 @@ public class TaskController {
     }
 
     @PostMapping
-    @Validated(CreateUser.class)
+    @Validated
     public ResponseEntity<Void> create(@Valid @RequestBody Task obj) {
         this.taskService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}").buildAndExpand(obj.getId()).toUri();
+                .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    @Validated(UpdateUser.class)
+    @Validated
     public ResponseEntity<Void> update(@Valid @RequestBody Task obj, @PathVariable Long id) {
         obj.setId(id);
         this.taskService.update(obj);
@@ -65,10 +60,10 @@ public class TaskController {
         this.taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
-    
+
     @GetMapping("/user")
-    public ResponseEntity<List<Task>> findAllByUser() {
-        List<Task> objs = this.taskService.findAllByUser();
+    public ResponseEntity<List<TaskProjection>> findAllByUser() {
+        List<TaskProjection> objs = this.taskService.findAllByUser();
         return ResponseEntity.ok().body(objs);
     }
 

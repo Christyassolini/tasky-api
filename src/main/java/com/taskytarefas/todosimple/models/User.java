@@ -25,24 +25,15 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.taskytarefas.todosimple.models.enums.ProfileEnum;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 public class User {
-    public interface CreateUser {
-    }
-
-    public interface UpdateUser {
-    }
 
     public static final String TABLE_NAME = "user";
 
@@ -52,18 +43,18 @@ public class User {
     private Long id;
 
     @Column(name = "nome", length = 100, nullable = false)
-    @NotBlank(groups = {CreateUser.class, UpdateUser.class})
+    @NotBlank
     private String nome;
 
     @Email
     @Column(name = "email", length = 255, nullable = false, unique = true)
-    @NotBlank(groups = {CreateUser.class, UpdateUser.class})
+    @NotBlank
     private String email;
 
     @JsonProperty(access = Access.WRITE_ONLY)
     @Column(name = "senha", length = 60, nullable = false)
-    @NotBlank(groups = {CreateUser.class, UpdateUser.class})
-    @Size(groups = { CreateUser.class, UpdateUser.class }, min = 6, max = 60)
+    @NotBlank
+    @Size(min = 6, max = 60)
     private String senha;
 
     @OneToMany(mappedBy = "user") //O mappedBy = "user" indica que o lado dono da relação está na entidade Task, no atributo chamado user.

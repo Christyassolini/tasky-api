@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.taskytarefas.todosimple.models.User;
+import com.taskytarefas.todosimple.models.dto.UserCreateDTO;
+import com.taskytarefas.todosimple.models.dto.UserUpdateDTO;
 import com.taskytarefas.todosimple.models.enums.ProfileEnum;
 import com.taskytarefas.todosimple.repositories.UserRepository;
 import com.taskytarefas.todosimple.security.UserSpringSecurity;
@@ -74,6 +77,23 @@ public class UserService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public User fromDTO(@Valid UserCreateDTO obj) {
+        User user = new User();
+        user.setNome(obj.getNome());
+        user.setEmail(obj.getEmail());
+        user.setSenha(obj.getSenha());
+        return user;
+    }
+
+    public User fromDTO(@Valid UserUpdateDTO obj) {
+        User user = new User();
+        user.setId(obj.getId());
+        user.setNome(obj.getNome());
+        user.setEmail(obj.getEmail());
+        user.setSenha(obj.getSenha());
+        return user;
     }
 
 }
