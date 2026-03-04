@@ -1,5 +1,6 @@
 package com.taskytarefas.todosimple.services;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -7,32 +8,39 @@ import java.util.stream.Stream;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.taskytarefas.todosimple.models.User;
 import com.taskytarefas.todosimple.models.enums.ProfileEnum;
 import com.taskytarefas.todosimple.repositories.UserRepository;
+import com.taskytarefas.todosimple.security.UserSpringSecurity;
+import com.taskytarefas.todosimple.services.exceptions.AuthorizationException;
 
 @Service
 public class UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    
-    @Autowired //Cria uma instância da classe automaticamente.
+
+    @Autowired // Cria uma instância da classe automaticamente.
     private UserRepository userRepository;
 
-
-    //Método: Localizar usuário pelo ID
+    // Método: Localizar usuário pelo ID
     public User findById(Long id) {
-        Optional<User> user = this.userRepository.findById(id); //Retorna seu o id veio Null
-        return user.orElseThrow(() -> new RuntimeException(     //Se for null retorna uma aviso
-            "Usuário não encontrado! Id: " + id + ", Tipo: " + User.class.getName()
-        ));
+        UserSpringSecurity userSpringSecurity = authenticated();
+        if (!Objects.nonNull(userSpringSecurity)
+                || !userSpringSecurity.hasRole(ProfileEnum.ADMIN) && !id.equals(userSpringSecurity.getId()))
+            throw new AuthorizationException("Acesso negado!");
+
+        Optional<User> user = this.userRepository.findById(id); // Retorna seu o id veio Null
+        return user.orElseThrow(() -> new RuntimeException( // Se for null retorna uma aviso
+                "Usuário não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
     }
 
-    @Transactional // Garante que toda operação seja feita. Exemplo: Não permite que salve apenas metade de um usuário.
+    @Transactional // Garante que toda operação seja feita. Exemplo: Não permite que salve apenas
+                   // metade de um usuário.
     public User create(User obj) {
         obj.setId(null);
         obj.setSenha(this.bCryptPasswordEncoder.encode(obj.getSenha()));
@@ -59,4 +67,13 @@ public class UserService {
             throw new RuntimeException("Não é possivel excluir pois há entidade relacionadas!");
         }
     }
+
+    public static UserSpringSecurity authenticated() {
+        try {
+            return (UserSpringSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();    
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
