@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,6 +19,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.taskytarefas.todosimple.security.JWTAuthenticationFilter;
+import com.taskytarefas.todosimple.security.JWTAuthorizationFilter;
 import com.taskytarefas.todosimple.security.JWTUtil;
 
 @Configuration
@@ -38,7 +39,6 @@ public class SecurityConfig {
     private static final String[] PUBLIC_MATCHERS = {
             "/"
     };
-
     private static final String[] PUBLIC_MATCHERS_POST = {
             "/user",
             "/login"
@@ -47,18 +47,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.cors(withDefaults()).csrf(csrf -> csrf.disable());
-
         AuthenticationManagerBuilder authenticationManagerBuilder = http
-            .getSharedObject(AuthenticationManagerBuilder.class);
+                .getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(this.userDetailsService)
-            .passwordEncoder(bCryptPasswordEncoder());
+                .passwordEncoder(bCryptPasswordEncoder());
         this.authenticationManager = authenticationManagerBuilder.build();
 
-        http.authorizeRequests(requests -> requests
-                .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-                .antMatchers(PUBLIC_MATCHERS).permitAll()
-                .anyRequest().authenticated());
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+                        .antMatchers(PUBLIC_MATCHERS).permitAll()
+                        .anyRequest().authenticated())
+                .authenticationManager(this.authenticationManager)
+                .addFilter(new JWTAuthenticationFilter(this.authenticationManager, this.jwtUtil))
+                .addFilter(new JWTAuthorizationFilter(this.authenticationManager, this.jwtUtil, this.userDetailsService))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
