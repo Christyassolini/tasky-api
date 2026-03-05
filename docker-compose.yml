@@ -1,4 +1,4 @@
-name: tasky
+version: "3.8"
 
 services:
   mysqldb:
