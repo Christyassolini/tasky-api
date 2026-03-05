@@ -162,12 +162,12 @@ a {
     .container {
         border-radius: 20px;
         padding: 50px 0 50px 0;
-        width: 250px;
+        width: min(92vw, 360px);
         box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     }
 
     .content {
-        width: 200px;
+        width: min(84vw, 300px);
     }
 
     .title {
@@ -219,13 +219,15 @@ a {
     }
 
     .container {
-        width: min(92vw, 760px);
+        width: min(85vw, 520px);
+        max-width: calc(100vw - 16px);
         border-radius: 16px;
         padding: 20px 0;
     }
 
     .content {
-        width: min(84vw, 620px);
+        width: min(78vw, 420px);
+        max-width: calc(100% - 28px);
     }
 
     .title {
