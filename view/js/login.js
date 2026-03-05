@@ -1,6 +1,6 @@
 // API base url (ajuste se necessário)
 // const API_URL = "http://localhost:8080";
-const API_URL = "http://135.232.112.135:8080";
+const API_URL = "/api";
 
 // helpers de JWT
 function saveToken(token) {
