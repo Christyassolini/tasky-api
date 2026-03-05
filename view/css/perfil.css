@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --primary: #4F46E5;
-  --primary-light: #6366F1;
-  --bg: #F9FAFB;
-  --text-main: #43464e;
-  --text-secondary: #6B7280;
-  --success: #22C55E;
-  --error: #EF4444;
+    --primary: #4F46E5;
+    --primary-light: #6366F1;
+    --bg: #F9FAFB;
+    --text-main: #43464e;
+    --text-secondary: #6B7280;
+    --success: #22C55E;
+    --error: #EF4444;
 }
 
 * {
@@ -25,23 +25,27 @@ body {
     flex-direction: column;
 }
 
-h1, h2, h3 {
-  font-weight: 600;
+h1,
+h2,
+h3 {
+    font-weight: 600;
 }
 
 button {
-  font-weight: 500;
+    font-weight: 500;
 }
 
-p, span, input {
-  font-weight: 400;
+p,
+span,
+input {
+    font-weight: 400;
 }
 
 /* ==================== Header ==================== */
 
 .header {
     display: flex;
-    background: linear-gradient(120deg, #6366F1,#4F46E5,#3b32ec);
+    background: linear-gradient(120deg, #6366F1, #4F46E5, #3b32ec);
     height: 125px;
     align-items: center;
     justify-content: center;
@@ -96,7 +100,7 @@ p, span, input {
 
 /* ==================== Container Editar ==================== */
 
-.container{
+.container {
     position: relative;
     width: 100%;
     flex: 1;
@@ -123,7 +127,7 @@ p, span, input {
     text-align: center;
 }
 
-.form{
+.form {
     width: 800px;
 }
 
@@ -208,7 +212,7 @@ p, span, input {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(120deg, #6366F1,#4F46E5,#3b32ec);
+    background: linear-gradient(120deg, #6366F1, #4F46E5, #3b32ec);
     color: var(--bg);
     width: 100%;
     padding: 20px 0;
@@ -216,12 +220,157 @@ p, span, input {
     margin-top: auto;
 }
 
-.title-footer h1{
+.title-footer h1 {
     font-size: 1rem;
     text-align: center;
 }
 
-.title-footer h1 a{
+.title-footer h1 a {
     text-decoration: none;
     color: black;
+}
+
+@media (max-width: 768px) {
+
+    .header {
+        height: 90px;
+        align-items: center;
+    }
+
+    .logo img {
+        height: 100px;
+        width: 90px;
+    }
+
+    .nav {
+        gap: 10px;
+    }
+
+    .nav span {
+        border-radius: 7px;
+        padding: 5px 5px 5px 5px;
+        font-size: 0.8rem;
+    }
+
+    .nav span:hover {
+        background-color: #898bff;
+    }
+
+    .perfil {
+        width: 25px;
+        height: 25px;
+        border-radius: 15px;
+    }
+
+    /* ==================== Container Editar ==================== */
+
+    .cadastro-container {
+        margin-top: 20px;
+        gap: 20px;
+    }
+
+    .cadastro-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .container-title {
+        width: 250px;
+    }
+
+    .form {
+        width: 250px;
+    }
+
+    .form div {
+        margin-bottom: 10px;
+    }
+
+    .nome-titulo label {
+        font-size: 0.8rem;
+    }
+
+    .nome-titulo input {
+        height: 25px;
+        font-size: 0.8rem;
+    }
+
+    .alteracoes {
+        margin: 20px;
+    }
+
+
+    /* ==================== Footer ==================== */
+
+    .title-footer h1 {
+        font-size: 0.5rem;
+    }
+
+}
+
+@media (max-width: 932px) and (max-height: 500px) and (orientation: landscape) {
+
+    .header {
+        height: 72px;
+    }
+
+    .logo img {
+        height: 78px;
+        width: 72px;
+    }
+
+    .nav span {
+        border-radius: 7px;
+        padding: 6px 8px;
+        font-size: 0.75rem;
+    }
+
+    .perfil {
+        width: 30px;
+        height: 30px;
+    }
+
+    .cadastro-container {
+        margin-top: 12px;
+        gap: 12px;
+    }
+
+    .cadastro-container h1 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .container-title {
+        width: min(86vw, 620px);
+    }
+
+    .form {
+        width: min(86vw, 620px);
+    }
+
+    .form div {
+        margin-bottom: 12px;
+    }
+
+    .nome-titulo label,
+    .desc label {
+        font-size: 0.8rem;
+    }
+
+    .nome-titulo input {
+        height: 30px;
+        font-size: 0.85rem;
+    }
+
+    .alteracoes {
+        margin: 12px 6px;
+        gap: 12px;
+    }
+
+    .container-footer {
+        min-height: 80px;
+    }
+
+    .title-footer h1 {
+        font-size: 0.65rem;
+    }
 }

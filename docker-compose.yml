@@ -1,4 +1,4 @@
-version: "3.8"
+name: tasky
 
 services:
   mysqldb:
@@ -12,14 +12,21 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - mysqlvolume:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p$MYSQLDB_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
   app:
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     build:
       context: ./
       dockerfile: Dockerfile
-    working_dir: /usr/src/todosimpleapp
-    container_name: todosimpleapp
+    working_dir: /usr/src/tasky
+    container_name: tasky
     restart: on-failure
     env_file: ./.env
     ports:

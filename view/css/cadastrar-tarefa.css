@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --primary: #4F46E5;
-  --primary-light: #6366F1;
-  --bg: #F9FAFB;
-  --text-main: #43464e;
-  --text-secondary: #6B7280;
-  --success: #22C55E;
-  --error: #EF4444;
+    --primary: #4F46E5;
+    --primary-light: #6366F1;
+    --bg: #F9FAFB;
+    --text-main: #43464e;
+    --text-secondary: #6B7280;
+    --success: #22C55E;
+    --error: #EF4444;
 }
 
 * {
@@ -25,23 +25,27 @@ body {
     flex-direction: column;
 }
 
-h1, h2, h3 {
-  font-weight: 600;
+h1,
+h2,
+h3 {
+    font-weight: 600;
 }
 
 button {
-  font-weight: 500;
+    font-weight: 500;
 }
 
-p, span, input {
-  font-weight: 400;
+p,
+span,
+input {
+    font-weight: 400;
 }
 
 /* ==================== Header ==================== */
 
 .header {
     display: flex;
-    background: linear-gradient(120deg, #6366F1,#4F46E5,#3b32ec);
+    background: linear-gradient(120deg, #6366F1, #4F46E5, #3b32ec);
     height: 125px;
     align-items: center;
     justify-content: center;
@@ -66,6 +70,7 @@ p, span, input {
 .nav {
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 
 .nav a {
@@ -86,9 +91,16 @@ p, span, input {
     background-color: #898bff;
 }
 
+.perfil {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
 /* ==================== Cadastrar Tarefa ==================== */
 
-.container{
+.container {
     position: relative;
     width: 100%;
     flex: 1;
@@ -117,7 +129,7 @@ p, span, input {
     align-items: center;
 }
 
-.form{
+.form {
     width: 800px;
 }
 
@@ -200,7 +212,7 @@ p, span, input {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(120deg, #6366F1,#4F46E5,#3b32ec);
+    background: linear-gradient(120deg, #6366F1, #4F46E5, #3b32ec);
     color: var(--bg);
     width: 100%;
     padding: 20px 0;
@@ -208,12 +220,253 @@ p, span, input {
     margin-top: auto;
 }
 
-.title-footer h1{
+.title-footer h1 {
     font-size: 1rem;
     text-align: center;
 }
 
-.title-footer h1 a{
+.title-footer h1 a {
     text-decoration: none;
     color: black;
+}
+
+@media (max-width: 768px) {
+
+    /* ==================== Header ==================== */
+
+    .header {
+        height: 90px;
+        align-items: center;
+    }
+
+    .logo img {
+        height: 100px;
+        width: 90px;
+    }
+
+    .nav {
+        gap: 10px;
+    }
+
+    .nav span {
+        border-radius: 7px;
+        padding: 5px 5px 5px 5px;
+        font-size: 0.8rem;
+    }
+
+    .nav span:hover {
+        background-color: #898bff;
+    }
+
+    .perfil {
+        width: 25px;
+        height: 25px;
+        border-radius: 15px;
+    }
+
+    /* ==================== Cadastrar Tarefa ==================== */
+
+    .cadastro-container {
+        margin-top: 20px;
+    }
+
+    .cadastro-container h1 {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .container-title {
+        width: 250px;
+    }
+
+    .titulo-cadastre {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .form {
+        width: 250px;
+    }
+
+    .form div {
+        margin-bottom: 20px;
+    }
+
+    .nome-titulo input {
+        width: 100%;
+        height: 30px;
+        padding: 0 10px;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        border: none;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .nome-titulo input:focus {
+        transform: scale(1.01);
+    }
+
+    .nome-titulo label {
+        font-size: 0.8rem;
+    }
+
+    .desc label {
+        font-size: 0.8rem;
+    }
+
+    .desc textarea {
+        width: 100%;
+        resize: none;
+        overflow-y: auto;
+        padding: 10px;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        border: none;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .contador {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+
+    .desc textarea:focus {
+        transform: scale(1.01);
+    }
+
+    .alteracoes {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px;
+    }
+
+    .cancelar button {
+        background-color: var(--error);
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        cursor: pointer;
+    }
+
+    .cancelar button:hover {
+        background-color: #752020;
+        transform: scale(1.02);
+    }
+
+    .salvar button {
+        background-color: var(--success);
+        padding: 10px 30px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .salvar button:hover {
+        background-color: #16853f;
+        transform: scale(1.02);
+    }
+
+    .container-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(120deg, #6366F1, #4F46E5, #3b32ec);
+        color: var(--bg);
+        width: 100%;
+        padding: 20px 0;
+        min-height: 100px;
+        margin-top: auto;
+    }
+
+    .title-footer h1 {
+        font-size: 0.5rem;
+    }
+
+}
+
+@media (max-width: 932px) and (max-height: 500px) and (orientation: landscape) {
+
+    .header {
+        height: 72px;
+    }
+
+    .logo img {
+        height: 78px;
+        width: 72px;
+    }
+
+    .nav span {
+        border-radius: 7px;
+        padding: 6px 8px;
+        font-size: 0.75rem;
+    }
+
+    .perfil {
+        width: 30px;
+        height: 30px;
+    }
+
+    .cadastro-container {
+        margin-top: 12px;
+        gap: 12px;
+    }
+
+    .cadastro-container h1 {
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    .container-title {
+        width: min(88vw, 640px);
+    }
+
+    .titulo-cadastre {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .form {
+        width: min(88vw, 640px);
+    }
+
+    .form div {
+        margin-bottom: 12px;
+    }
+
+    .nome-titulo label,
+    .desc label {
+        font-size: 0.8rem;
+    }
+
+    .nome-titulo input {
+        height: 30px;
+        font-size: 0.85rem;
+    }
+
+    .desc textarea {
+        min-height: 74px;
+    }
+
+    .alteracoes {
+        margin: 12px 6px;
+        gap: 12px;
+    }
+
+    .cancelar button,
+    .salvar button {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+    }
+
+    .container-footer {
+        min-height: 80px;
+    }
+
+    .title-footer h1 {
+        font-size: 0.65rem;
+    }
 }
