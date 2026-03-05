@@ -1,5 +1,6 @@
 // API base url
-const API_URL = "http://localhost:8080";
+// const API_URL = "http://localhost:8080";
+const API_URL = "http://135.232.112.135:8080";
 
 // Helpers de JWT
 function getToken() {
@@ -22,7 +23,7 @@ function parseJWT(token) {
 // Função para fazer logout
 function logout() {
     localStorage.removeItem("token");
-    window.location.href = "./index.html";
+    window.location.href = "../index.html";
 }
 
 // Dados do usuário logado
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     // Se não tiver token, redireciona para login
     if (!token) {
         console.log("Sem token, redirecionando para login");
-        window.location.href = "./index.html";
+        window.location.href = "../index.html";
         return;
     }
 
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     
     if (!payload) {
         console.log("Erro ao decodificar JWT");
-        window.location.href = "./index.html";
+        window.location.href = "../index.html";
         return;
     }
     
@@ -58,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     if (!email) {
         console.log("Email não encontrado no JWT");
         toastError("Erro: Email não encontrado no token");
-        setTimeout(() => window.location.href = "./index.html", 1500);
+        setTimeout(() => window.location.href = "../index.html", 1500);
         return;
     }
 
@@ -127,7 +128,7 @@ async function buscarIdPorOutraForm(email, token) {
             }
         } else {
             toastError("Email não encontrado. Faça login novamente.");
-            setTimeout(() => window.location.href = "./index.html", 1500);
+            setTimeout(() => window.location.href = "../index.html", 1500);
         }
     } catch (erro) {
         console.error("Erro na busca alternativa:", erro);

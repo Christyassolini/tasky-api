@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:8080"
+// const API_URL = "http://localhost:8080"
+const API_URL = "http://135.232.112.135:8080"
 
 // JWT helpers
 function getToken() {
@@ -12,7 +13,7 @@ function authHeaders() {
 
 function logout() {
     localStorage.removeItem("token");
-    window.location.href = "./index.html";
+    window.location.href = "../index.html";
 }
 
 // Remove USER_ID constant; backend determina o usuário pelo token
@@ -23,7 +24,7 @@ function logout() {
 document.addEventListener("DOMContentLoaded", () => {
     if (!getToken()) {
         // usuário não autenticado
-        window.location.href = "./index.html";
+        window.location.href = "../index.html";
         return;
     }
     carregarTarefas()

@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:8080"
+// const API_URL = "http://localhost:8080"
+const API_URL = "http://135.232.112.135:8080"
 
 function getToken() {
     return localStorage.getItem("token");
@@ -11,12 +12,12 @@ function authHeaders() {
 
 function logout() {
     localStorage.removeItem("token");
-    window.location.href = "./index.html";
+    window.location.href = "../index.html";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     if (!getToken()) {
-        window.location.href = "./index.html";
+        window.location.href = "../index.html";
     }
 });
 

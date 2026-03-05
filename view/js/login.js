@@ -1,5 +1,6 @@
 // API base url (ajuste se necessário)
-const API_URL = "http://localhost:8080";
+// const API_URL = "http://localhost:8080";
+const API_URL = "http://135.232.112.135:8080";
 
 // helpers de JWT
 function saveToken(token) {
@@ -8,6 +9,14 @@ function saveToken(token) {
 
 function getToken() {
     return localStorage.getItem("token");
+}
+
+function getTarefaPath() {
+    return window.location.pathname.includes('/view/') ? './tarefa.html' : './view/tarefa.html';
+}
+
+if (getToken()) {
+    window.location.href = getTarefaPath();
 }
 
 /**
@@ -78,7 +87,7 @@ async function validarLogin() {
         // Armazenar o email também para uso posterior
         localStorage.setItem("userEmail", email)
       }
-      window.location.href = "./tarefa.html"
+            window.location.href = getTarefaPath()
       return true
     } else {
       const erro = await resposta.text()
