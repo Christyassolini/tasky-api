@@ -320,7 +320,7 @@ input {
 }
 
 .dropdown-item textarea {
-    resize: vertical;
+    resize: none;
     min-height: 80px;
 }
 

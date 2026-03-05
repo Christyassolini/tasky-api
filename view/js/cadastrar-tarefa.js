@@ -23,6 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Salvar tarefa
 async function salvarTarefa() {
+    // 🔒 Bloqueia múltiplos cliques enquanto está salvando
+    const btnSalvar = document.querySelector("button[onclick='salvarTarefa()']");
+    if (btnSalvar.disabled) {
+        return; // Se já está desabilitado, não faz nada
+    }
 
     // Pega valores digitados pelo usuário
     let titulo = document.getElementById("title").value.trim()
@@ -43,6 +48,13 @@ async function salvarTarefa() {
         toastWarning('Por favor, preencha a descrição da tarefa.')
         return
     }
+
+    // 🔒 Desabilita o botão para evitar cliques múltiplos
+    btnSalvar.disabled = true;
+    btnSalvar.style.opacity = "0.5";
+    btnSalvar.style.cursor = "not-allowed";
+    const textoOriginal = btnSalvar.textContent;
+    btnSalvar.textContent = "Salvando...";
 
     // Monta o objeto (o back‑end atribuirá o usuário com base no token)
     let novaTarefa = {
@@ -69,11 +81,23 @@ async function salvarTarefa() {
             let erro = await resposta.text()
             console.error("Erro do servidor:", erro)
             toastError("Erro ao salvar tarefa. Abra o console (F12) para ver os detalhes.")
+            
+            // 🔓 Reabilita o botão em caso de erro
+            btnSalvar.disabled = false;
+            btnSalvar.style.opacity = "1";
+            btnSalvar.style.cursor = "pointer";
+            btnSalvar.textContent = textoOriginal;
         }
 
     } catch (erro) {
         console.error("Erro na requisição:", erro)
         toastError("Não foi possível conectar ao servidor. O back-end está rodando?")
+        
+        // 🔓 Reabilita o botão em caso de erro
+        btnSalvar.disabled = false;
+        btnSalvar.style.opacity = "1";
+        btnSalvar.style.cursor = "pointer";
+        btnSalvar.textContent = textoOriginal;
     }
 
 } // ← a função só fecha aqui, depois do try/catch
