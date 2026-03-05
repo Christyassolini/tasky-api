@@ -1,9 +1,31 @@
 const API_URL = "http://localhost:8080"
-const USER_ID = 1 // Temporário, futuramente virá do JWT
+
+// JWT helpers
+function getToken() {
+    return localStorage.getItem("token");
+}
+
+function authHeaders() {
+    const token = getToken();
+    return token ? { "Authorization": "Bearer " + token } : {};
+}
+
+function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "./index.html";
+}
+
+// Remove USER_ID constant; backend determina o usuário pelo token
 
 
-// Ao carregar a página, busca as tarefas
+
+// Ao carregar a página, valida o token e busca as tarefas
 document.addEventListener("DOMContentLoaded", () => {
+    if (!getToken()) {
+        // usuário não autenticado
+        window.location.href = "./index.html";
+        return;
+    }
     carregarTarefas()
 })
 
@@ -13,9 +35,16 @@ async function carregarTarefas() {
     container.innerHTML = "<p>Carregando tarefas...</p>"
 
     try {
-        let resposta = await fetch(`${API_URL}/task/user/${USER_ID}`)
+        let resposta = await fetch(`${API_URL}/task/user`, {
+            headers: authHeaders()
+        })
 
         if (!resposta.ok) {
+            if (resposta.status === 401 || resposta.status === 403) {
+                // token inválido ou expirado
+                logout();
+                return;
+            }
             container.innerHTML = "<p>Erro ao carregar tarefas.</p>"
             return
         }
@@ -48,21 +77,16 @@ function criarCardTarefa(tarefa) {
         <div class="tarefas-field" data-id="${tarefa.id}">
             <div class="nome-tarefa" onclick="toggleAccordion(this, event)">
                 <h2>${tarefa.titulo}</h2>
-                <span class="accordion-icon">▼</span>
+                <span class="accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg></span>
             </div>
             <div class="accordion-content" style="display: none;">
                 <p class="accordion-description">${tarefa.description}</p>
             </div>
             <div class="btn-tarefas">
-                <button class="btn concluir" type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                    <p>Concluir</p>
-                </button>
-
                 <div class="dropdown-container">
                     <button onclick="toggleEditar(${tarefa.id})">
                         <div class="btn editar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#43464e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
                             <p>Editar</p>
                         </div>
                     </button>
@@ -85,7 +109,7 @@ function criarCardTarefa(tarefa) {
                 </div>
 
                 <div class="btn excluir" onclick="excluirTarefa(${tarefa.id})">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#43464e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                     <p>Excluir</p>
                 </div>
             </div>
@@ -152,66 +176,70 @@ async function salvarEdicao(tarefaId) {
     const novaDesc = document.getElementById(`desc-${tarefaId}`).value.trim()
 
     if (!novoTitulo) {
-        alert("O título não pode ficar vazio.");
+        toastWarning("O título não pode ficar vazio.");
         return
     }
 
     if (!novaDesc) {
-        alert("A descrição não pode ficar vazia.");
+        toastWarning("A descrição não pode ficar vazia.");
         return
     }
 
-    // O PUT espera o objeto completo com user, igual ao POST
+    // O PUT atualiza título e descrição; o backend usa o usuário do token
     const tarefaAtualizada = {
         titulo: novoTitulo,
-        description: novaDesc,
-        user: {
-            id: USER_ID
-        }
+        description: novaDesc
     };
 
     try {
         const resposta = await fetch(`${API_URL}/task/${tarefaId}`, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: Object.assign({ "Content-Type": "application/json" }, authHeaders()),
             body: JSON.stringify(tarefaAtualizada)
         });
 
         if (resposta.status === 204) { // 204 = No Content (seu controller retorna isso)
-            alert("Tarefa atualizada com sucesso!")
+            toastSuccess("Tarefa atualizada com sucesso!")
             carregarTarefas(); // Recarrega a lista para refletir a mudança
         } else {
+            if (resposta.status === 401 || resposta.status === 403) {
+                logout();
+                return;
+            }
             const erro = await resposta.text();
             console.error("Erro ao atualizar:", erro)
-            alert("Erro ao atualizar tarefa.");
+            toastError("Erro ao atualizar tarefa.");
         }
 
     } catch (erro) {
         console.error("Erro na requisição:", erro)
-        alert("Não foi possível conectar ao servidor.")
+        toastError("Não foi possível conectar ao servidor.")
     }
 }
 
 // Excluir tarefa
 async function excluirTarefa(tarefaId) {
-    const confirmar = confirm("Tem certeza que deseja excluir esta tarefa?")
-    if (!confirmar) return; // Se o usuário cancelar, para aqui
+    showConfirmModal("Tem certeza que deseja excluir esta tarefa?", async () => {
+        try {
+            const resposta = await fetch(`${API_URL}/task/${tarefaId}`, {
+                method: "DELETE",
+                headers: authHeaders()
+            });
 
-    try {
-        const resposta = await fetch(`${API_URL}/task/${tarefaId}`, {
-            method: "DELETE"
-        });
+            if (resposta.status === 204) { // 204 = No Content
+                toastSuccess("Tarefa excluída com sucesso!")
+                carregarTarefas() // Recarrega a lista sem a tarefa excluída
+            } else {
+                if (resposta.status === 401 || resposta.status === 403) {
+                    logout();
+                    return;
+                }
+                toastError("Erro ao excluir tarefa.")
+            }
 
-        if (resposta.status === 204) { // 204 = No Content
-            carregarTarefas() // Recarrega a lista sem a tarefa excluída
-        } else {
-            alert("Erro ao excluir tarefa.")
+        } catch (erro) {
+            console.error("Erro na requisição:", erro)
+            toastError("Não foi possível conectar ao servidor.")
         }
-
-    } catch (erro) {
-        console.error("Erro na requisição:", erro)
-        alert("Não foi possível conectar ao servidor.")
-    }
+    });
 }

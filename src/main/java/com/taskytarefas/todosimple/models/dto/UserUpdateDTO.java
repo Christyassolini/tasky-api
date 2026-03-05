@@ -22,7 +22,6 @@ public class UserUpdateDTO {
     @NotBlank
     private String email;
 
-    @NotBlank
     @Size(min = 6, max = 60)
     private String senha;
 

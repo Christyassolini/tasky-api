@@ -42,6 +42,23 @@ public class UserService {
                 "Usuário não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
     }
 
+    // Método: Localizar usuário pelo email
+    public User findByEmail(String email) {
+        UserSpringSecurity userSpringSecurity = authenticated();
+        if (!Objects.nonNull(userSpringSecurity))
+            throw new AuthorizationException("Acesso negado!");
+
+        User user = this.userRepository.findByEmail(email);
+        if (user == null)
+            throw new RuntimeException("Usuário não encontrado com email: " + email);
+        
+        // Verifica se o usuário logado é ADMIN ou está acessando seus próprios dados
+        if (!userSpringSecurity.hasRole(ProfileEnum.ADMIN) && !email.equals(userSpringSecurity.getUsername()))
+            throw new AuthorizationException("Acesso negado!");
+            
+        return user;
+    }
+
     @Transactional // Garante que toda operação seja feita. Exemplo: Não permite que salve apenas
                    // metade de um usuário.
     public User create(User obj) {
@@ -55,10 +72,14 @@ public class UserService {
     @Transactional
     public User update(User obj) {
         User newObj = findById(obj.getId());
-        newObj.setSenha(obj.getSenha());
-        newObj.setSenha(this.bCryptPasswordEncoder.encode(obj.getSenha()));
         newObj.setNome(obj.getNome());
         newObj.setEmail(obj.getEmail());
+        
+        // Apenas atualiza a senha se ela foi preenchida
+        if (obj.getSenha() != null && !obj.getSenha().isEmpty()) {
+            newObj.setSenha(this.bCryptPasswordEncoder.encode(obj.getSenha()));
+        }
+        
         return this.userRepository.save(newObj);
     }
 

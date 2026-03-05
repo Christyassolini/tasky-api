@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/tarefa.css">
+    <link rel="stylesheet" href="./css/toast.css">
+    <script src="js/toast.js" defer></script>
     <title>Lista de Tarefas</title>
 </head>
 <body>
@@ -15,7 +17,8 @@
                 <img src="./img/logo.png" alt="Logo">
             </div>
             <div class="nav">
-                <a href="./index.html"><span>Log Out</span></a>
+                <a href="#" onclick="logout(); return false"><span>Log Out</span></a>
+                <a href="perfil.html"><img src="img/fotoPerfil.jpg" class="perfil" alt="Foto de Perfil"></a>
             </div>
         </div>
     </header>

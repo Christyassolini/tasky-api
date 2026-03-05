@@ -3,7 +3,6 @@
 :root {
   --primary: #4F46E5;
   --primary-light: #9293e6;
-  --bg: #F9FAFB;
   --text-main: #111827;
   --text-secondary: #6B7280;
   --success: #22C55E;
@@ -17,10 +16,6 @@
     font-family: 'Inter', sans-serif;
 }
 
-body {
-    background-color: var(--bg);
-}
-
 .login-container,
 .cadastro-container {
     top: 0;
@@ -31,6 +26,7 @@ body {
     height: 100vh;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(120deg, #8183e4,#afaec7,#434075);
     opacity: 0;
     visibility: hidden;
     transform: translateX(50px);
@@ -153,4 +149,8 @@ body {
 .btn-submit:hover {
     background-color: #a6a6e7;
     transform: scale(1.05);
+}
+
+a {
+    color: #111827;
 }

@@ -40,6 +40,12 @@ public class UserController {
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping("/email/{email}")    //Método para buscar um usuário pelo email
+    public ResponseEntity<User> findByEmail(@PathVariable String email) {
+        User obj = this.userService.findByEmail(email);
+        return ResponseEntity.ok().body(obj);
+    }
+
     @PostMapping
     @Validated
     public ResponseEntity<Void> create(@Valid @RequestBody UserCreateDTO obj) {

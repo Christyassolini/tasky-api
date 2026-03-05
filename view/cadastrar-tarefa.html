@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/cadastrar-tarefa.css">
+    <link rel="stylesheet" href="./css/toast.css">
+    <script src="js/toast.js" defer></script>
     <title>Lista de Tarefas</title>
 </head>
 
@@ -17,7 +19,7 @@
                 <img src="./img/logo.png" alt="Logo">
             </div>
             <div class="nav">
-                <span>Log Out</span>
+                <a href="#" onclick="logout(); return false"><span>Log Out</span></a>
             </div>
         </div>
     </header>
@@ -25,7 +27,6 @@
     <!-- ================ Cadastro ================ -->
 
     <main class="container">
-        <input type="hidden" id="userId" value="1">
         <section class="cadastro-container">
             <div class="container-title">
                 <div class="titulo-cadastre">
@@ -67,5 +68,10 @@
             </div>
         </section>
     </main>
+    <footer class="container-footer">
+        <div class="title-footer">
+            <h1>Copyrith &copy 2026 <a href="https://christyassolini.github.io/Portif-lio/">Christyan Assolini</a>. Todos os direitos reservados.</h1>
+        </div>
+    </footer>
     <script src="./js/cadastrar-tarefa.js"></script>
 </body>

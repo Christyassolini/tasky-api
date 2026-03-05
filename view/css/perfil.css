@@ -66,6 +66,7 @@ p, span, input {
 .nav {
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 
 .nav a {
@@ -86,7 +87,14 @@ p, span, input {
     background-color: #898bff;
 }
 
-/* ==================== Cadastrar Tarefa ==================== */
+.perfil {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+/* ==================== Container Editar ==================== */
 
 .container{
     position: relative;
@@ -112,9 +120,7 @@ p, span, input {
 }
 
 .titulo-cadastre {
-    display: grid;
-    grid-template-columns: 1fr 500px 1fr;
-    align-items: center;
+    text-align: center;
 }
 
 .form{
@@ -196,6 +202,8 @@ p, span, input {
     transform: scale(1.02);
 }
 
+/* ==================== Footer ==================== */
+
 .container-footer {
     display: flex;
     justify-content: center;
@@ -204,7 +212,7 @@ p, span, input {
     color: var(--bg);
     width: 100%;
     padding: 20px 0;
-    min-height: 100px;
+    min-height: 150px;
     margin-top: auto;
 }
 

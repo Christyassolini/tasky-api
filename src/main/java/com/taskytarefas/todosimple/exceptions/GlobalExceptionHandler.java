@@ -73,6 +73,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
             DataIntegrityViolationException dataIntegrityViolationException,
             WebRequest request) {
         String errorMessage = dataIntegrityViolationException.getMostSpecificCause().getMessage();
+        
+        // Verificar se é erro de email duplicado
+        if (errorMessage != null && errorMessage.toLowerCase().contains("email")) {
+            errorMessage = "Este email já está em uso. Por favor, escolha outro.";
+        } else if (errorMessage != null && errorMessage.toLowerCase().contains("unique")) {
+            errorMessage = "Este valor já está em uso no sistema.";
+        }
+        
         log.error("Failed to save entity with integrity problems: " + errorMessage, dataIntegrityViolationException);
         return buildErrorResponse(
                 dataIntegrityViolationException,
@@ -178,7 +186,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
         Integer status = HttpStatus.UNAUTHORIZED.value();
         response.setStatus(status);
         response.setContentType("application/json");
-        ErrorResponse errorResponse = new ErrorResponse(status, "Email ou senha inválidos");
+        ErrorResponse errorResponse = new ErrorResponse(status, "Email ou senha invalidos");
         response.getWriter().append(errorResponse.toJson());
     }
 

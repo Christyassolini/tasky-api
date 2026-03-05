@@ -73,6 +73,7 @@ p, span, input {
 
 .nav {
     display: flex;
+    align-items: center;
     gap: 20px;
 }
 
@@ -92,6 +93,13 @@ p, span, input {
 
 .nav span:hover {
     background-color: #898bff;
+}
+
+.perfil {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    cursor: pointer;
 }
 
 /* ==================== Tarefas ==================== */
@@ -220,7 +228,6 @@ p, span, input {
     display: flex;
     align-items: center;
     gap: 5px;
-    border: 0.5px solid black;
     border-radius: 5px;
     padding: 8px 12px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
@@ -236,15 +243,22 @@ p, span, input {
     font-size: 0.8rem;
 }
 
-.btn.concluir {
-    background-color: var(--success);
-    border: none;
+.btn.excluir {
+    background-color: var(--error);
     color: white;
-    transition: 0.3s ease;
 }
 
-.btn.concluir:hover {
-    background-color: #16853f;
+.btn.excluir:hover {
+    background-color: #752020;
+}
+
+.btn.editar {
+    background-color: var(--primary-light);
+    color: white;
+}
+
+.btn.editar:hover {
+    background-color: var(--primary);
 }
 
 .dropdown-container {

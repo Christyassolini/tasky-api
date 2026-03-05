@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/toast.css">
+    <script src="./js/toast.js" defer></script>
     <script src="./js/login.js" defer></script>
+    <script>
+        // se já existe token, manda direto para a lista
+        if (localStorage.getItem('token')) {
+            window.location.href = './tarefa.html';
+        }
+    </script>
     <title>Login Tasky</title>
 </head>
 <body>
@@ -37,13 +45,10 @@
                             <p>Lembrar de mim</p>
                         </div>
                     </div>
-                    <div class="esqueceu-senha">
-                        <a href="#">Esqueceu sua senha?</a>
-                    </div>
                 </div>
                 <div class="submit">
                     <button class="btn-submit" onclick="validarLogin()">Entrar</button>
-                    <p>Ainda não possui uma conta? <a href="" onclick="mostrarCadastro(); return false">Cadastrar-se</a></p>
+                    <p>Ainda não possui uma conta? <a href="" class="cadastrar-se" onclick="mostrarCadastro(); return false">Cadastrar-se</a></p>
                 </div>
             </section>
         </div>

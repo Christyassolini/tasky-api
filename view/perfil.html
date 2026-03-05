@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/perfil.css">
+    <link rel="stylesheet" href="./css/toast.css">
+    <script src="js/toast.js" defer></script>
+    <script src="js/perfil.js" defer></script>
+    <title>Perfil</title>
+</head>
+
+<body>
+    <!-- ================ Header ================ -->
+
+    <header class="header">
+        <div class="content-header">
+            <div class="logo">
+                <img src="./img/logo.png" alt="Logo">
+            </div>
+            <div class="nav">
+                <a href="#" onclick="logout(); return false"><span>Log Out</span></a>
+                <a href="perfil.html"><img src="img/fotoPerfil.jpg" class="perfil" alt="Foto de Perfil"></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================ Cadastro ================ -->
+
+    <main class="container">
+        <section class="cadastro-container">
+            <div class="container-title">
+                <div class="titulo-cadastre">
+                    <h1>Editar perfil</h1>
+                </div>
+            </div>
+            <div class="form">
+                <div class="nome-titulo">
+                    <label for="nome">Nome</label><br>
+                    <input type="text" class="title" id="nome" placeholder=" "><br>
+                </div>
+                <div class="nome-titulo">
+                    <label for="email">Email</label><br>
+                    <input type="text" class="title" id="email" placeholder=" "><br>
+                </div>
+                <div class="nome-titulo">
+                    <label for="senha">Nova senha (deixe em branco para manter a atual)</label><br>
+                    <input type="password" class="title" id="senha" placeholder=" "><br>
+                </div>
+                <div class="nome-titulo">
+                    <label for="confirmarSenha">Confirmar nova senha</label><br>
+                    <input type="password" class="title" id="confirmarSenha" placeholder=" "><br>
+                </div>
+                <div class="alteracoes">
+                    <div class="cancelar">
+                        <button type="button" onclick="cancelar()">Cancelar</button>
+                    </div>
+                    <div class="salvar">
+                        <button type="button" onclick="salvarTarefa()">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ================ Footer ================ -->
+
+    <footer class="container-footer">
+        <div class="title-footer">
+            <h1>Copyrith &copy 2026 <a href="https://christyassolini.github.io/Portif-lio/">Christyan Assolini</a>.
+                Todos os direitos reservados.</h1>
+        </div>
+    </footer>
+</body>
