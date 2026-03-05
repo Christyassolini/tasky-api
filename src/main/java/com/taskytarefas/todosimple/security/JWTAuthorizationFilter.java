@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -46,10 +47,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         if (this.jwtUtil.isValidToken(token)) {
             String username = this.jwtUtil.getEmail(token);
-            UserDetails user = this.userDetailsService.loadUserByUsername(username);
-            UsernamePasswordAuthenticationToken authenticatedUser = new UsernamePasswordAuthenticationToken(user, null,
-                    user.getAuthorities());
-            return authenticatedUser;
+            try {
+                UserDetails user = this.userDetailsService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authenticatedUser = new UsernamePasswordAuthenticationToken(user, null,
+                        user.getAuthorities());
+                return authenticatedUser;
+            } catch (UsernameNotFoundException e) {
+                SecurityContextHolder.clearContext();
+                return null;
+            }
         }
         return null;
     }
