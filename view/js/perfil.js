@@ -1,6 +1,6 @@
 // API base url
-const API_URL = "http://135.232.112.135:8080";
-//const API_URL = "/api";
+// const API_URL = "http://135.232.112.135:8080";
+const API_URL = "/api"
 
 // Helpers de JWT
 function getToken() {
