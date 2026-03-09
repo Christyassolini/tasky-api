@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/tasky
-            rm .env
+            rm -f .env
             touch .env
             echo MYSQLDB_USER=${{ secrets.MYSQLDB_USER }} >> .env
             echo MYSQLDB_ROOT_PASSWORD=${{ secrets.MYSQLDB_ROOT_PASSWORD }} >> .env
