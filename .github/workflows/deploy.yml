@@ -56,5 +56,13 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/tasky
-            docker-compose build --no-cache app
-            docker-compose up -d app
+            if docker compose version >/dev/null 2>&1; then
+              DC="docker compose"
+            else
+              DC="docker-compose"
+            fi
+
+            $DC down --remove-orphans || true
+            docker rm -f todosimpleapp || true
+            $DC build --no-cache app
+            $DC up -d --force-recreate --remove-orphans mysqldb app
