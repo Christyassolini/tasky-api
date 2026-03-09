@@ -10,6 +10,7 @@ import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,6 +89,23 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
                 HttpStatus.CONFLICT,
                 request);
     }
+
+            @ExceptionHandler(InvalidDataAccessResourceUsageException.class)
+            @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+            public ResponseEntity<Object> handleInvalidDataAccessResourceUsageException(
+                InvalidDataAccessResourceUsageException exception,
+                WebRequest request) {
+            String errorMessage = exception.getMostSpecificCause() != null
+                ? exception.getMostSpecificCause().getMessage()
+                : "Erro de sintaxe/comando SQL ao acessar o banco";
+
+            log.error("Failed to execute SQL statement: " + errorMessage, exception);
+            return buildErrorResponse(
+                exception,
+                errorMessage,
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                request);
+            }
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
