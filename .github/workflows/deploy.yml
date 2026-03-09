@@ -62,7 +62,11 @@ jobs:
               DC="docker-compose"
             fi
 
-            $DC down --remove-orphans || true
-            docker rm -f todosimpleapp || true
+            # Para APENAS o container da app (preserva MySQL e volume)
+            docker rm -f tasky || true
+            
+            # Builda a app novamente
             $DC build --no-cache app
-            $DC up -d --force-recreate --remove-orphans mysqldb app
+            
+            # Sobe tudo (MySQL só inicia se não estiver rodando; app é recriado)
+            $DC up -d mysqldb app
