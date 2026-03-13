@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Task {
-    public static final String TABLE_NAME = "tasks";
+    public static final String TABLE_NAME = "task";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

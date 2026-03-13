@@ -1,5 +1,7 @@
-// const API_URL = "http://135.232.112.135:8080"
-const API_URL = "/api"
+// API base url (local: Spring em 8080 | deploy: proxy /api)
+const API_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8080"
+    : "/api"
 
 // JWT helpers
 function getToken() {

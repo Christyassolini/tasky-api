@@ -35,7 +35,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class User {
 
-    public static final String TABLE_NAME = "users";
+    public static final String TABLE_NAME = "user";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +63,7 @@ public class User {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @CollectionTable(name = "users_profiles")
+    @CollectionTable(name = "user_profile")
     @Column(name = "profile", nullable = false)
     private Set<Integer> profiles = new HashSet<>();
 

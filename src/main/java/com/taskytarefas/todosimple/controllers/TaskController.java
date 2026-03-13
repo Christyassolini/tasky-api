@@ -38,6 +38,12 @@ public class TaskController {
         return ResponseEntity.ok(obj);
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<List<TaskProjection>> findAllByUser() {
+        List<TaskProjection> tasks = this.taskService.findAllByUser();
+        return ResponseEntity.ok(tasks);
+    }
+
     @PostMapping
     @Validated
     public ResponseEntity<Void> create(@Valid @RequestBody Task obj) {
