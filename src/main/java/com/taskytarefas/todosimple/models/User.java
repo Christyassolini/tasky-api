@@ -29,13 +29,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "user")
+@Table(name = User.TABLE_NAME)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class User {
 
-    public static final String TABLE_NAME = "user";
+    public static final String TABLE_NAME = "users";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +63,7 @@ public class User {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @CollectionTable(name = "user_profile")
+    @CollectionTable(name = "users_profiles")
     @Column(name = "profile", nullable = false)
     private Set<Integer> profiles = new HashSet<>();
 

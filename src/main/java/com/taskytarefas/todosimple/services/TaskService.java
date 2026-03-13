@@ -66,6 +66,12 @@ public class TaskService {
         return this.taskRepository.save(newObj);
     }
 
+    /**
+     * Método delete
+     * 
+     * @param Long id - Identificador da Task
+     * @Throw RuntimeException
+     */
     public void delete(Long id) {
         findById(id);
         try {

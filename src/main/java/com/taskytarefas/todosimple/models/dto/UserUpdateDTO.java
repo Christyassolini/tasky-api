@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserUpdateDTO {
 
-    private Long id;
-
     @NotBlank
     private String nome;
 

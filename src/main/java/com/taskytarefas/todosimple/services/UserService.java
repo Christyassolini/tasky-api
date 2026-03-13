@@ -108,9 +108,9 @@ public class UserService {
         return user;
     }
 
-    public User fromDTO(@Valid UserUpdateDTO obj) {
+    public User fromDTO(@Valid UserUpdateDTO obj, Long id) {
         User user = new User();
-        user.setId(obj.getId());
+        user.setId(id);
         user.setNome(obj.getNome());
         user.setEmail(obj.getEmail());
         user.setSenha(obj.getSenha());

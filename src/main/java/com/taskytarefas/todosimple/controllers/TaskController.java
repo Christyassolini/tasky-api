@@ -60,11 +60,4 @@ public class TaskController {
         this.taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-    @GetMapping("/user")
-    public ResponseEntity<List<TaskProjection>> findAllByUser() {
-        List<TaskProjection> objs = this.taskService.findAllByUser();
-        return ResponseEntity.ok().body(objs);
-    }
-
 }
