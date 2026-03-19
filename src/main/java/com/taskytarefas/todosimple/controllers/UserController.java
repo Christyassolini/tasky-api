@@ -24,23 +24,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/user")
 @Validated
 @CrossOrigin(origins = "*")
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{id}")    //Método para buscar um usuário específico pelo ID e retornar ele como resposta da API.
+    @GetMapping("/{id}") // Método para buscar um usuário específico pelo ID e retornar ele como resposta
+                         // da API.
     public ResponseEntity<User> findById(@PathVariable long id) {
         User obj = this.userService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping("/email/{email}")    //Método para buscar um usuário pelo email
+    @GetMapping("/email/{email}") // Método para buscar um usuário pelo email
     public ResponseEntity<User> findByEmail(@PathVariable String email) {
         User obj = this.userService.findByEmail(email);
         return ResponseEntity.ok().body(obj);
@@ -52,9 +52,9 @@ public class UserController {
         User user = this.userService.fromDTO(obj);
         User newUser = this.userService.create(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(newUser.getId())
-            .toUri();
+                .path("/{id}")
+                .buildAndExpand(newUser.getId())
+                .toUri();
         return ResponseEntity.created(uri).build();
     }
 
@@ -71,4 +71,4 @@ public class UserController {
         this.userService.delete(id);
         return ResponseEntity.noContent().build();
     }
-} 
+}
