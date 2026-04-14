@@ -1,19 +1,18 @@
-FROM maven:3.8.3-openjdk-17
+# ── Stage 1: Build ───────────────────────────────────────────
+FROM maven:3.8.6-openjdk-17-slim AS build
+WORKDIR /app
 
-ENV PROJECT_HOME /usr/src/tasky
-ENV JAR_NAME tasky.jar
+# Cache das dependências em camada separada (rebuild mais rápido)
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-# Create destination directory
-RUN mkdir -p $PROJECT_HOME
-WORKDIR $PROJECT_HOME
+# Build do projeto
+COPY src ./src
+RUN mvn clean package -DskipTests -B
 
-# Bundle app source
-COPY . .
+# ── Stage 2: Runtime ─────────────────────────────────────────
+FROM eclipse-temurin:17-jre-jammy
+WORKDIR /app
+COPY --from=build /app/target/tasky.jar app.jar
 
-# Package the application as a JAR file
-RUN mvn clean package -DskipTests
-
-# Move file
-RUN mv $PROJECT_HOME/target/$JAR_NAME $PROJECT_HOME/
-
-ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "tasky.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
