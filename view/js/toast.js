@@ -79,6 +79,35 @@ function toastInfo(message, duration = 4000) {
 // Substituir alert padrão (opcional)
 // window.alert = (message) => toastInfo(message);
 
+// ==================== Utilitário de Erros da API ====================
+
+/**
+ * Extrai uma mensagem amigável de uma resposta de erro da API.
+ * - Erros 5xx → retorna mensagemPadrao (não expõe detalhes técnicos ao usuário)
+ * - Erros 4xx → retorna a mensagem do backend (já tratada pelo servidor)
+ * @param {Response} resposta - Objeto Response do fetch (consome o body uma única vez)
+ * @param {string} mensagemPadrao - Mensagem de fallback exibida ao usuário
+ */
+async function parseApiError(resposta, mensagemPadrao = "Ocorreu um erro inesperado. Tente novamente.") {
+    try {
+        const texto = await resposta.text();
+        if (resposta.status >= 500) {
+            console.error("Erro interno do servidor:", texto);
+            return mensagemPadrao;
+        }
+        const json = JSON.parse(texto);
+        if (json.errors && json.errors.length > 0) {
+            return json.errors.map(e => e.message).join(" · ");
+        }
+        if (json.message) {
+            return json.message;
+        }
+        return mensagemPadrao;
+    } catch (_) {
+        return mensagemPadrao;
+    }
+}
+
 // ==================== Modal de Confirmação ====================
 
 /**

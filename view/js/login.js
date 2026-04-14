@@ -91,8 +91,8 @@ async function validarLogin() {
             window.location.href = getTarefaPath()
       return true
     } else {
-      const erro = await resposta.text()
-      toastError(`Falha no login: ${erro}`)
+      const mensagem = await parseApiError(resposta, "Email ou senha incorretos.")
+      toastError(mensagem)
       return false
     }
   } catch (erro) {
@@ -164,9 +164,8 @@ async function validarCadastro() {
             toastError('Este email já está em uso. Por favor, escolha outro.');
             return false;
         } else {
-            const erro = await resposta.text();
-            console.error('Erro no cadastro:', erro);
-            toastError('Falha ao cadastrar: ' + erro);
+            const mensagem = await parseApiError(resposta, "Erro ao realizar o cadastro. Tente novamente.");
+            toastError(mensagem);
             return false;
         }
     } catch (erro) {

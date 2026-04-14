@@ -80,9 +80,8 @@ async function salvarTarefa() {
                 logout();
                 return;
             }
-            let erro = await resposta.text()
-            console.error("Erro do servidor:", erro)
-            toastError("Erro ao salvar tarefa. Abra o console (F12) para ver os detalhes.")
+            const mensagem = await parseApiError(resposta, "Erro ao salvar tarefa. Tente novamente.")
+            toastError(mensagem)
             
             // 🔓 Reabilita o botão em caso de erro
             btnSalvar.disabled = false;

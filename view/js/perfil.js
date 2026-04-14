@@ -174,13 +174,12 @@ async function carregarDadosUsuario() {
             toastError("Sua sessão expirou. Faça login novamente.");
             setTimeout(() => logout(), 1500);
         } else {
-            const textoErro = await resposta.text();
-            console.error("Erro na resposta:", resposta.status, textoErro);
-            toastError("Erro ao carregar dados do usuário. Status: " + resposta.status);
+            const mensagem = await parseApiError(resposta, "Erro ao carregar dados do usuário.");
+            toastError(mensagem);
         }
     } catch (erro) {
         console.error("Erro ao carregar dados do usuário:", erro);
-        toastError("Não foi possível conectar ao servidor. Erro: " + erro.message);
+        toastError("Não foi possível conectar ao servidor.");
     }
 }
 
@@ -279,14 +278,9 @@ async function salvarTarefa() {
             setTimeout(() => logout(), 1500);
         } else if (resposta.status === 409) {
             toastError("Este email já está em uso. Por favor, escolha outro.");
-        } else if (resposta.status === 400) {
-            const erro = await resposta.text();
-            console.error("Erro 400 do servidor:", erro);
-            toastError("Erro ao atualizar perfil: " + erro);
         } else {
-            const erro = await resposta.text();
-            console.error("Erro do servidor:", resposta.status, erro);
-            toastError("Erro ao atualizar perfil. Status: " + resposta.status);
+            const mensagem = await parseApiError(resposta, "Erro ao atualizar perfil. Tente novamente.");
+            toastError(mensagem);
         }
         return false;
     } catch (erro) {
