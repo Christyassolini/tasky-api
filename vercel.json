@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://taskytarefas-api.eastus2.cloudapp.azure.com:8080/:path*"
+      "destination": "https://tasky-api-production.up.railway.app/:path*"
     }
   ]
 }
